@@ -1,0 +1,100 @@
+<div class="w-full">
+  <%= form_for @post do |p| %>
+    <div>
+      <%= p.label "Title: " %><br/>
+      <%= p.text_field :title, class: 'ui-input w-full', placeholder: 'Enter your title' %><br/>
+      <em class="text-sm"><span class="text-red-500">*</span>(title will be heading 1 on your post)</em>
+    </div>
+    <div class="mt-5">
+      Content
+      <em>
+        (write by <%= link_to :markdown, "https://www.markdownguide.org/", target: :_blank, class: 'text-blue-600 underline' %> language)
+        <span class="text-red-500">*</span>
+      </em>
+      :
+    </div>
+    <div id="editor-area" class="mt-2">
+      <div id="editor-menu-strip" class="flex justify-end bg-gray-100 items-center rounded-t-xl py-1.5 px-4 text-sm space-x-1">
+        <div id="heading-menu-strip">
+          <button onclick="insertHeading(1)" class="border border-gray-300 px-1.5 py-1 text-xs rounded-lg" type="button" title="Insert heading 1">H1</button>
+          <button onclick="insertHeading(2)" class="border border-gray-300 px-1.5 py-1 text-xs rounded-lg" type="button" title="Insert heading 2">H2</button>
+          <button onclick="insertHeading(3)" class="border border-gray-300 px-1.5 py-1 text-xs rounded-lg" type="button" title="Insert heading 3">H3</button>
+          <button onclick="insertHeading(4)" class="border border-gray-300 px-1.5 py-1 text-xs rounded-lg" type="button" title="Insert heading 4">H4</button>
+          <button onclick="insertHeading(5)" class="border border-gray-300 px-1.5 py-1 text-xs rounded-lg" type="button" title="Insert heading 5">H5</button>
+          <button onclick="insertHeadin(6)" class="border border-gray-300 px-1.5 py-1 text-xs rounded-lg" type="button" title="Insert heading 6">H6</button>
+        </div>
+        <div id="text-menu-strip">
+          <button onclick="insertBoldText()" class="border border-gray-300 px-1.5 py-1 text-xs rounded-lg font-bold" type="button" title="Bold text">Bold</button>
+          <button onclick="insertItalicText()" class="border border-gray-300 px-1.5 py-1 text-xs rounded-lg italic" type="button" title="Bold text">Italic</button>
+          <button onclick="insertUnderlineText()" class="border border-gray-300 px-1.5 py-1 text-xs rounded-lg underline" type="button" title="Bold text">Underline</button>
+        </div>
+      </div>
+      <div id="editor" class="rounded-b-xl border w-max">
+        <%= p.text_area :content %><br/>
+      </div>
+    </div>
+    <div class="mt-3 flex justify-end">
+    <%= p.submit "Create post", class: 'btn-primary text-sm' %>
+    </div>
+  <% end %>
+</div>
+<script>
+  var editor = ace.edit("editor");
+  var session = editor.getSession();
+  session.setUseWorker(false);
+  //editor.setTheme('ace/theme/eclipse');
+  session.setMode('ace/mode/markdown');
+  editor.setValue("");
+
+  /* for key binding of editor */
+  editor.commands.addCommand({
+      name: "insertBoldText",
+      bindKey: { win: "Ctrl-b", mac: "Control-b" },
+      exec: function(editor) { insertBoldText(); }
+  });
+  editor.commands.addCommand({
+      name: "insertItalicText",
+      bindKey: { win: "Ctrl-i", mac: "Control-i" },
+      exec: function(editor) { insertItalicText(); }
+  });
+  editor.commands.addCommand({
+      name: "insertItalicText",
+      bindKey: { win: "Ctrl-u", mac: "Control-u" },
+      exec: function(editor) { insertUnderlineText(); }
+  });
+
+  function insertHeading( heading ) {
+      var current_position = editor.getCursorPosition();
+      session.insert(current_position, '\n' + '#'.repeat(heading) + ' ');
+  }
+
+  function insertBoldText() {
+      var current_position = editor.getCursorPosition();
+      console.log(current_position);
+      session.insert(current_position, '**** ');
+
+      // for moving cursor at center of bold mark
+      var next_pos = editor.getCursorPosition();
+      editor.gotoLine(next_pos.row + 1, next_pos.column - 3);
+  }
+
+  function insertItalicText() {
+      var current_position = editor.getCursorPosition();
+      console.log(current_position);
+      session.insert(current_position, '__ ');
+
+      // for moving cursor at center of bold mark
+      var next_pos = editor.getCursorPosition();
+      editor.gotoLine(next_pos.row + 1, next_pos.column - 2);
+  }
+
+  function insertUnderlineText() {
+      var current_position = editor.getCursorPosition();
+      console.log(current_position);
+      session.insert(current_position, '<u></u> ');
+
+      // for moving cursor at center of bold mark
+      var next_pos = editor.getCursorPosition();
+      editor.gotoLine(next_pos.row + 1, next_pos.column - 5);
+  }
+</script>

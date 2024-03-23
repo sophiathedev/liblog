@@ -1,0 +1,35 @@
+<% content_for :title, "Newest posts - Liblog" %>
+
+<div class="w-8/12">
+  <div class="flex justify-between items-center">
+    <h1 class="text-4xl font-bold tracking-tight text-gradient from-sky-400 to-blue-600">Newest Posts</h1>
+    <%= button_to "New post", new_posts_path, method: :get, class: 'btn-primary text-sm' %>
+  </div>
+  <div class="space-y-2 mt-4">
+  <% @list_post.each do |post| %>
+    <div class="flex items-center border w-full shadow-md space-y-1 py-3 rounded-xl">
+      <div class="flex justify-center items-center w-20">
+        <% if post.vote == 0 %>
+          <p class="text-xl font-bold text-center text-gray-300" title="Voting">=<%= post.vote %></p>
+        <% elsif post.vote > 0 %>
+          <p class="text-xl font-bold text-center text-green-400" title="Voting">+<%= post.vote %></p>
+        <% else %>
+          <p class="text-xl font-bold text-center text-red-500" title="Voting"><%= post.vote %></p>
+        <% end %>
+      </div>
+      <div class="flex-row">
+        <div class="flex">
+          <span class="text-sm">
+            <span class="hover:underline hover:text-blue-600 cursor-pointer"><%= post.user.username %></span>
+            -
+            <%= post.created_at %>
+          </span>
+        </div>
+        <div class="flex">
+          <%= link_to post.title, detail_post_path(post.id), class: 'text-sm text-black font-medium' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>
