@@ -1,0 +1,4 @@
+<% content_for :title, "Liblog: Keep sharing, more growing" %>
+<% if user_signed_in? %>
+  <h1 class="text-3xl font-bold">Welcome back, <span class="text-gradient from-sky-400 to-blue-600"><%= current_user.username %></span>!</h1>
+<% end %>
