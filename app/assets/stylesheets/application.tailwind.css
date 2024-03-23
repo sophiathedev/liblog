@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-200;
+  }
+}
+
+*/
+
+@layer components {
+  #editor {
+    @apply relative w-full h-[500px]
+  }
+
+  /*::selection { @apply bg-zinc-950 text-white }*/
+
+  .ui-input {
+    @apply px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-xl border-none focus:ring-0 focus:outline-sky-400 focus:outline-offset-0
+  }
+
+  .btn-primary {
+    @apply px-4 py-1.5 bg-blue-500 hover:bg-blue-600 rounded-xl text-white cursor-pointer
+  }
+
+  .btn-second {
+    @apply px-4 py-1.5 bg-gray-200 hover:bg-gray-300 rounded-xl text-black cursor-pointer
+  }
+
+  .btn-danger {
+    @apply btn-primary bg-red-500 hover:bg-red-600
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r text-transparent bg-clip-text
+  }
+
+  .form-checkbox {
+    @apply border-none bg-gray-100 text-zinc-950 rounded-md focus:ring-transparent focus:outline-none
+  }
+}
