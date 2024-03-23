@@ -1,0 +1,61 @@
+<% content_for :title, "Edit profile - Liblog" %>
+
+<div class="flex-row justify-center">
+  <h1 class="text-4xl text-black font-bold tracking-wide">
+    Hi <span class="text-gradient from-sky-400 to-blue-600"><%= current_user.username %></span>!
+  </h1>
+  <h1 class="text-3xl text-gray-300 font-bold tracking-wide">You want to change your information?</h1>
+  <div class="mt-4">
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="mt-2">
+        <%= f.label :username, class: 'text-sm font-medium text-black' %><br/>
+        <%= f.text_field :username, autofocus: true, autocomplete: "username", class: 'ui-input w-full' %>
+      </div>
+
+      <div class="mt-2">
+        <%= f.label :email, class: 'text-sm font-medium text-black' %><br />
+        <%= f.email_field :email, autocomplete: "email", class: 'ui-input w-full' %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <div class="mt-2">
+        <%= f.label :password, class: 'text-sm font-medium text-black' %> <i class="text-sm text-black">(leave blank if you don't want to change it)</i><br />
+        <%= f.password_field :password, autocomplete: "new-password", class: 'ui-input w-full', placeholder: 'new password' %>
+        <% if @minimum_password_length %>
+          <br />
+          <em class="text-sm text-black"><%= @minimum_password_length %> characters minimum</em>
+        <% end %>
+      </div>
+
+      <div class="mt-2">
+        <%= f.label :password_confirmation, class: 'text-sm font-medium text-black' %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'ui-input w-full', placeholder: 'confirm new password' %>
+      </div>
+
+      <div class="mt-2">
+        <%= f.label :current_password, class: 'text-sm font-medium text-black' %> <i class="text-sm text-black">(we need your current password to confirm your changes)</i><br />
+        <%= f.password_field :current_password, autocomplete: "current-password", class: 'ui-input w-full', placeholder: 'current password' %>
+      </div>
+
+      <div class="mt-3 flex items-center justify-between">
+        <div>
+          <%= f.submit "Update", class: 'btn-primary text-sm' %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="flex justify-between mt-4 items-center">
+      <%= link_to "Back", :back, class: 'text-blue-500 underline text-sm' %>
+      <div class="flex items-center text-sm">
+        Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: 'btn-danger ml-2 text-sm' %>
+      </div>
+    </div>
+  </div>
+
+</div>
